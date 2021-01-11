@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Makair Simulator</title>
+
+  <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+
+  <script>
+    const socket = io({
+      path: "/socket",
+      autoConnect: true
+    });
+
+    var resistance = 0;
+    var compliance = 0;
+
+    socket.on("get_params", function(params) {
+      resistance = params.resistance;
+      compliance = params.compliance;
+
+      update_inputs();
+    });
+
+    var send_params = function() {
+      socket.emit("send_params", {
+        resistance: resistance,
+        compliance: compliance
+      })
+    };
+
+    var update_inputs = function() {
+      document.querySelector("#resistance").value = resistance;
+      document.querySelector("#compliance").value = compliance;
+    };
+
+    var change_resistance = function(element) {
+      resistance = parseInt(element.value);
+
+      send_params();
+    };
+
+    var change_compliance = function(element) {
+      compliance = parseInt(element.value);
+
+      send_params();
+    };
+
+  </script>
+
+  <style>
+    body, html {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+
+    iframe {
+      display: flex;
+      flex: 1;
+      height: 100%;
+    }
+
+    .form {
+      margin: 30px;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+
+<body>
+    <iframe src="http://167.99.222.155:8080/vnc.html?password=makair&path=vnc%2F167.99.222.155%2F5901&autoconnect=true&resize=scale&reconnect=true&show_dot=true"></iframe>
+
+    <div class="form">
+      <label>Resistance</label>
+      <input id="resistance" type="number" min="1" max="100" onchange="change_resistance(this)">
+      <label>Compliance</label>
+      <input id="compliance" type="number" min="1" max="100" onchange="change_compliance(this)">
+    </div>
+</body>
+
+</html>

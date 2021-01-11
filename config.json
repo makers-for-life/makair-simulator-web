@@ -1,0 +1,9 @@
+{
+  "PORT": 8000,
+  "SIMULATOR" : {
+    "PATH" : "/Users/baptistejamin/projects/coronavirus/makair-simulator/build/simulator",
+    "SERIAL" : "/dev/ttys003",
+    "RESISTANCE": 10,
+    "COMPLIANCE": 30
+  }
+}
