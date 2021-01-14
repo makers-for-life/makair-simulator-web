@@ -1,5 +1,6 @@
 var CONFIG     = require("../config");
 var spawn      = require("child_process").spawn;
+var fs         = require("fs");
 
 class Simulator {
   constructor() {
@@ -57,10 +58,31 @@ class Simulator {
         "-p", CONFIG.SIMULATOR.SERIAL
       ]);
 
+      this.appendLogs("stdout", `=========${Date.now()}========`);
+      this.appendLogs("stderr", `=========${Date.now()}========`);
+
+      this.child_simulator.stdout.on("data", (data) => {
+        this.appendLogs("stdout", data);
+      });
+
+      this.child_simulator.stderr.on("data", (data) => {
+        this.appendLogs("stderr", data);
+      });
+
+      this.child_simulator.on("close", (data) => {
+        this.appendLogs("stderr", data);
+      });
+
       this.started = true;
 
       return resolve();
     });
+  }
+
+  appendLogs(type, data) {
+    if (CONFIG.SIMULATOR.DEBUG === true) {
+      fs.appendFile(`${CONFIG.SIMULATOR.LOGS}/${type}.txt`, data, function() {});
+    }
   }
 }
 

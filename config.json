@@ -2,6 +2,8 @@
   "PORT": 8000,
   "SIMULATOR" : {
     "PATH" : "/Users/baptistejamin/projects/coronavirus/makair-simulator/build/simulator",
+    "DEBUG" : true,
+    "LOGS" : "/Users/baptistejamin/projects/coronavirus/makair-simulator-web/logs",
     "SERIAL" : "/dev/ttys003",
     "RESISTANCE": 10,
     "COMPLIANCE": 30
