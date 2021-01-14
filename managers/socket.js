@@ -16,7 +16,7 @@ class Socket {
 
   loop() {
     this.io.on("connection", (socket) => {
-      socket.index = this.pool.getAvailableIndex();
+      let _index = this.pool.getAvailableIndex();
 
       let _simulator = this.pool.getInstance(socket.index);
 
@@ -42,7 +42,11 @@ class Socket {
       });
 
       socket.on("heartbeat", () => { 
-         this.pool.heartbeat(socket.index);
+         this.pool.free(_index);
+      });
+
+      socket.on("pool", () => {
+        this.pool.free(_index);
       });
 
     });

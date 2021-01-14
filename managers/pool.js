@@ -45,8 +45,15 @@ class Pool {
 
   heartbeat(index) {
     if (this.pool[index]) {
-      this.pool[index].available == false;
+      this.pool[index].available = false;
       this.pool[index].last_availability = Date.now();
+    }
+  }
+
+  free(index) {
+    if (this.pool[index]) {
+      this.pool[index].available = true;
+      this.pool[index].last_availability = null;
     }
   }
 
@@ -55,8 +62,7 @@ class Pool {
       for (let _i = 0; _i < this.size; _i++) {
         if (this.pool[_i].last_availability &&
           (Date.now - this.pool[_i].last_availability > this.__dead_interval)) {
-          this.pool[index].available = true;
-          this.pool[index].last_availability = null;
+          this.free(index);
         }
       }
     }, 10000);
