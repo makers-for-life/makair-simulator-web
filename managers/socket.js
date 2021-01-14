@@ -45,7 +45,7 @@ class Socket {
          this.pool.free(_index);
       });
 
-      socket.on("pool", () => {
+      socket.on("disconnect", () => {
         this.pool.free(_index);
       });
 
