@@ -3,12 +3,13 @@ var spawn      = require("child_process").spawn;
 var fs         = require("fs");
 
 class Simulator {
-  constructor() {
+  constructor(index) {
     this.child_simulator = null;
 
     this.resistance = CONFIG.SIMULATOR.RESISTANCE;
     this.compliance = CONFIG.SIMULATOR.COMPLIANCE;
     this.started    = false;
+    this.index      = index;
 
     this.reboot();
 
@@ -16,7 +17,7 @@ class Simulator {
       this.kill();
     });
 
-    return Promise.resolve(this);
+    return this;
   }
 
   reboot() {
@@ -55,7 +56,7 @@ class Simulator {
       this.child_simulator  = spawn(CONFIG.SIMULATOR.PATH, [
         "-r", this.resistance,
         "-c", this.compliance,
-        "-p", CONFIG.SIMULATOR.SERIAL
+        "-p", `${CONFIG.SIMULATOR.SERIAL}/tty${this.index + 1}_0`
       ]);
 
       this.appendLogs("stdout", `=========${Date.now()}========`);
@@ -79,9 +80,13 @@ class Simulator {
     });
   }
 
+  getVNCUrl(index) {
+    return CONFIG.VNC.URL.replace("[PORT]", 5901 + this.index);
+  }
+
   appendLogs(type, data) {
     if (CONFIG.SIMULATOR.DEBUG === true) {
-      fs.appendFile(`${CONFIG.SIMULATOR.LOGS}/${type}.txt`, data, function() {});
+      fs.appendFile(`${CONFIG.SIMULATOR.LOGS}/${this.index + 1}_${type}.txt`, data, function() {});
     }
   }
 }

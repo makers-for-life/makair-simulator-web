@@ -25,11 +25,15 @@
       update_inputs();
     });
 
+    socket.on("instance", function(params) {
+      document.querySelector("#frame").src = params.vnc_url;
+    });
+
     var send_params = function() {
       socket.emit("send_params", {
         resistance: resistance,
         compliance: compliance
-      })
+      });
     };
 
     var update_inputs = function() {
@@ -48,6 +52,10 @@
 
       send_params();
     };
+
+    setInterval(function() {
+      socket.emit("heartbeat");
+    }, 20000);
 
   </script>
 
@@ -72,7 +80,7 @@
   </style>
 
 <body>
-    <iframe src="VNC_URL"></iframe>
+    <iframe id="frame" src=""></iframe>
 
     <div class="form">
       <label>Resistance</label>

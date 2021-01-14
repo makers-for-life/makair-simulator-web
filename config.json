@@ -1,10 +1,16 @@
 {
-  "PORT": 8000,
+  "PORT" : 8000,
+  "POOL" : {
+    "SIZE": 2
+  },
+  "VNC" : {
+    "URL" : "VNC_URL"
+  },
   "SIMULATOR" : {
     "PATH" : "/Users/baptistejamin/projects/coronavirus/makair-simulator/build/simulator",
     "DEBUG" : true,
     "LOGS" : "/Users/baptistejamin/projects/coronavirus/makair-simulator-web/logs",
-    "SERIAL" : "/dev/ttys003",
+    "SERIAL" : "/Users/baptistejamin/projects/coronavirus/makair-simulator/dev/",
     "RESISTANCE": 10,
     "COMPLIANCE": 30
   }

@@ -1,34 +1,51 @@
 const socket_io = require("socket.io");
 
 class Socket {
-  constructor(server, simulator) {
+  constructor(server, pool) {
     this.io = socket_io({
-	  path: "/socket",
-	  serveClient: false
-	});
+      path: "/socket",
+      serveClient: false
+    });
 
-	this.io.attach(server);
+    this.io.attach(server);
 
-	this.simulator = simulator;
+    this.pool = pool;
 
-	this.loop();
+    this.loop();
   }
 
   loop() {
-  	this.io.on("connection", (socket) => {
-	  socket.emit("get_params", { 
-	  	resistance: this.simulator.resistance,
-	  	compliance: this.simulator.compliance
-	  });
+    this.io.on("connection", (socket) => {
+      socket.index = this.pool.getAvailableIndex();
 
-	  socket.on("send_params", (params) => { 
-	  	this.simulator.resistance = params.resistance;
-	  	this.simulator.compliance = params.compliance;
+      let _simulator = this.pool.getInstance(socket.index);
 
-	  	this.simulator.reboot();
-	  });
+      // No simulator available
+      if (socket.index === -1) {
+        return
+      }
 
-	});
+      socket.emit("get_params", { 
+        resistance: _simulator.resistance,
+        compliance: _simulator.compliance
+      });
+
+      socket.emit("instance", { 
+        vnc_url: _simulator.getVNCUrl(),
+      });
+
+      socket.on("send_params", (params) => { 
+        _simulatorr.resistance = params.resistance;
+        _simulator.compliance = params.compliance;
+
+        _simulator.reboot();
+      });
+
+      socket.on("heartbeat", () => { 
+         this.pool.heartbeat(socket.index);
+      });
+
+    });
 
   }
 }

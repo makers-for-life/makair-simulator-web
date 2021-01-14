@@ -1,18 +1,18 @@
 var SocketManager  = require("./managers/socket");
 var ExpressManager = require("./managers/express");
-var SimulatorManager = require("./managers/simulator");
+var PoolManager  = require("./managers/pool");
 
-var __simulator_instance;
+var __pool;
 
 return Promise.resolve()
   .then(() => {
-    return new SimulatorManager();
+    return new PoolManager();
   })
-  .then((simulator) => {
-    __simulator_instance = simulator;
+  .then((pool) => {
+    __pool = pool;
 
     return new ExpressManager();
   })
   .then((server) => {
-    new SocketManager(server, __simulator_instance);
+    new SocketManager(server, __pool);
   });
