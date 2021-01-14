@@ -18,7 +18,7 @@ class Socket {
     this.io.on("connection", (socket) => {
       let _index = this.pool.getAvailableIndex();
 
-      let _simulator = this.pool.getInstance(socket.index);
+      let _simulator = this.pool.getInstance(_index);
 
       // No simulator available
       if (socket.index === -1) {
