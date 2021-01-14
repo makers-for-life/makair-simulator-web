@@ -21,7 +21,7 @@ class Socket {
       let _simulator = this.pool.getInstance(_index);
 
       // No simulator available
-      if (socket.index === -1) {
+      if (_index === -1) {
         return
       }
 
@@ -35,7 +35,7 @@ class Socket {
       });
 
       socket.on("send_params", (params) => { 
-        _simulatorr.resistance = params.resistance;
+        _simulator.resistance = params.resistance;
         _simulator.compliance = params.compliance;
 
         _simulator.reboot();
