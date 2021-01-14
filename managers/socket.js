@@ -42,7 +42,7 @@ class Socket {
       });
 
       socket.on("heartbeat", () => { 
-         this.pool.free(_index);
+         this.pool.heartbeat(_index);
       });
 
       socket.on("disconnect", () => {
