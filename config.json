@@ -12,6 +12,9 @@
     "LOGS" : "/Users/baptistejamin/projects/coronavirus/makair-simulator-web/logs",
     "SERIAL" : "/Users/baptistejamin/projects/coronavirus/makair-simulator/dev/",
     "RESISTANCE": 10,
-    "COMPLIANCE": 30
+    "COMPLIANCE": 30,
+    "SPONTANEOUS_BREATH_RATE" : 20,
+    "SPONTANEOUS_BREATH_EFFORT" : 5,
+    "SPONTANEOUS_BREATH_DURATION" : 200
   }
 }

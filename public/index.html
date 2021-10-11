@@ -17,10 +17,17 @@
 
     var resistance = 0;
     var compliance = 0;
+    var resistance = 0;
+    var spontaneousBreathRate = 0;
+    var spontaneousBreathEffort = 0;
+    var spontaneousBreathDuration = 0;
 
     socket.on("get_params", function(params) {
       resistance = params.resistance;
       compliance = params.compliance;
+      spontaneousBreathRate = params.spontaneousBreathRate;
+      spontaneousBreathEffort = params.spontaneousBreathEffort;
+      spontaneousBreathDuration = params.spontaneousBreathDuration;
 
       update_inputs();
     });
@@ -32,13 +39,19 @@
     var send_params = function() {
       socket.emit("send_params", {
         resistance: resistance,
-        compliance: compliance
+        compliance: compliance,
+        spontaneousBreathRate: spontaneousBreathRate,
+        spontaneousBreathEffort: spontaneousBreathEffort,
+        spontaneousBreathDuration: spontaneousBreathDuration
       });
     };
 
     var update_inputs = function() {
       document.querySelector("#resistance").value = resistance;
       document.querySelector("#compliance").value = compliance;
+      document.querySelector("#spontaneousBreathRate").value = spontaneousBreathRate;
+      document.querySelector("#spontaneousBreathEffort").value = spontaneousBreathEffort;
+      document.querySelector("#spontaneousBreathDuration").value = spontaneousBreathDuration;
     };
 
     var change_resistance = function(element) {
@@ -49,6 +62,24 @@
 
     var change_compliance = function(element) {
       compliance = parseInt(element.value);
+
+      send_params();
+    };
+
+    var change_sponaneous_breath_rate = function(element) {
+      spontaneousBreathRate = parseInt(element.value);
+
+      send_params();
+    };
+
+    var change_sponaneous_breath_effort = function(element) {
+      spontaneousBreathEffort = parseInt(element.value);
+
+      send_params();
+    };
+
+    var change_sponaneous_breath_duration = function(element) {
+      spontaneousBreathDuration = parseInt(element.value);
 
       send_params();
     };
@@ -87,6 +118,10 @@
       <input id="resistance" type="number" min="1" max="100" onchange="change_resistance(this)">
       <label>Compliance</label>
       <input id="compliance" type="number" min="1" max="100" onchange="change_compliance(this)">
+      <label>Sponataneous Breath Rate</label>
+      <input id="spontaneousBreathRate" type="number" min="0" max="35" onchange="change_sponaneous_breath_rate(this)">
+      <input id="spontaneousBreathEffort" type="number" min="0" max="15" onchange="change_sponaneous_breath_effort(this)">
+      <input id="spontaneousBreathDuration" type="number" min="0" max="500" onchange="change_sponaneous_breath_duration(this)">
     </div>
 </body>
 

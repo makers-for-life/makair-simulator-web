@@ -8,6 +8,9 @@ class Simulator {
 
     this.resistance = CONFIG.SIMULATOR.RESISTANCE;
     this.compliance = CONFIG.SIMULATOR.COMPLIANCE;
+    this.spontaneousBreathRate = CONFIG.SIMULATOR.SPONTANEOUS_BREATH_RATE;
+    this.spontaneousBreathEffort = CONFIG.SIMULATOR.SPONTANEOUS_BREATH_EFFORT;
+    this.spontaneousBreathDuration = CONFIG.SIMULATOR.SPONTANEOUS_BREATH_DURATION;
     this.started    = false;
     this.index      = index;
 
@@ -56,6 +59,9 @@ class Simulator {
       this.child_simulator  = spawn(CONFIG.SIMULATOR.PATH, [
         "-r", this.resistance,
         "-c", this.compliance,
+        "--spontaneousBreathRate", this.spontaneousBreathRate,
+        "--spontaneousBreathEffort", this.spontaneousBreathEffort,
+        "--spontaneousBreathDuration", this.spontaneousBreathDuration,
         "-p", `${CONFIG.SIMULATOR.SERIAL}/tty${this.index + 1}_0`
       ]);
 

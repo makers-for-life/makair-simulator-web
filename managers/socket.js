@@ -27,7 +27,10 @@ class Socket {
 
       socket.emit("get_params", { 
         resistance: _simulator.resistance,
-        compliance: _simulator.compliance
+        compliance: _simulator.compliance,
+        spontaneousBreathRate: _simulator.spontaneousBreathRate,
+        spontaneousBreathEffort: _simulator.spontaneousBreathEffort,
+        spontaneousBreathDuration: _simulator.spontaneousBreathDuration
       });
 
       socket.emit("instance", { 
@@ -37,6 +40,9 @@ class Socket {
       socket.on("send_params", (params) => { 
         _simulator.resistance = params.resistance;
         _simulator.compliance = params.compliance;
+        _simulator.spontaneousBreathRate = params.spontaneousBreathRate;
+        _simulator.spontaneousBreathEffort = params.spontaneousBreathEffort;
+        _simulator.spontaneousBreathDuration = params.spontaneousBreathDuration;
 
         _simulator.reboot();
       });
