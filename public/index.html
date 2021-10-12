@@ -114,13 +114,15 @@
     <iframe id="frame" src=""></iframe>
 
     <div class="form">
-      <label>Resistance</label>
+      <label>Resistance (cmh2O/L/s)</label>
       <input id="resistance" type="number" min="1" max="100" onchange="change_resistance(this)">
-      <label>Compliance</label>
+      <label>Compliance (mL/cmH2O)</label>
       <input id="compliance" type="number" min="1" max="100" onchange="change_compliance(this)">
-      <label>Sponataneous Breath Rate</label>
+      <label>Spontaneous Breath Rate (cycle/min)</label>
       <input id="spontaneousBreathRate" type="number" min="0" max="35" onchange="change_sponaneous_breath_rate(this)">
+      <label>Spontaneous Breath Effort (cmH2O)</label>
       <input id="spontaneousBreathEffort" type="number" min="0" max="15" onchange="change_sponaneous_breath_effort(this)">
+      <label>Spontaneous Breath Duration (ms)</label>
       <input id="spontaneousBreathDuration" type="number" min="0" max="500" onchange="change_sponaneous_breath_duration(this)">
     </div>
 </body>
